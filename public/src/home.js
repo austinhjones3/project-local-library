@@ -75,11 +75,11 @@ function getMostPopularBooks(books) {
 function getMostPopularAuthors(books, authors) {
     const result = [];
     // get array of author id's
-    const authorIdArray = getAuthorIds(authors);
+    const authorIdArr = getAuthorIds(authors);
     // for each author id
-    authorIdArray.forEach(id => {
+    authorIdArr.forEach(id => {
         // find their books and return them
-        const booksByAuthor = books.filter(book => id === book.authorId);
+        const booksByAuthor = books.filter(element => id === element.authorId);
         // for each book
         booksByAuthor.forEach(book => {
             // retrieves the author obj that matches the current author id

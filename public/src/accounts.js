@@ -26,18 +26,17 @@ function sortAccountsByLastName(accounts) {
 
 // destructured account.id, renamed userId
 function numberOfBorrows({ id: userId }, books) {
-    const init = 0;
     // destructured "element".borrows renamed borrowArray
-    return books.reduce((acc, { borrows: borrowArray}) => {
+    return books.reduce((acc, { borrows: borrowArr }) => {
         // get just the ids from the borrows
-        const borrowIdsArr = borrowArray.map(element => element.id);
+        const borrowIdsArr = borrowArr.map(element => element.id);
         // for each borrowId, check if it is equal to user id, acc++ if so
         borrowIdsArr.forEach(element => {
             if (checkStr(userId, element)) acc++;
             return acc;
         });
     return acc;
-    }, init);
+    }, 0);
 }
     
 

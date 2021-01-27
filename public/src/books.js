@@ -20,13 +20,9 @@ function findBookById(books, testId) {
 
 
 function partitionBooksByBorrowedStatus(books) {
-    const result = [];
-    // see helpers.js.
-    // each array is pushed in as an element of result arr. 
+    // each array is pushed in as an element of return arr. 
     // out first, then in
-    result.push(booksOut(books));
-    result.push(booksIn(books));
-    return result;
+    return [booksOut(books), booksIn(books)];
 }
 
 

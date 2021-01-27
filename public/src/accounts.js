@@ -27,7 +27,7 @@ function sortAccountsByLastName(accounts) {
 // destructured account.id, renamed userId
 function numberOfBorrows({ id: userId }, books) {
     const init = 0;
-    // destructured element.borrows renamed borrowArray
+    // destructured "element".borrows renamed borrowArray
     return books.reduce((acc, { borrows: borrowArray}) => {
         // get just the ids from the borrows
         const borrowIdsArr = borrowArray.map(element => element.id);

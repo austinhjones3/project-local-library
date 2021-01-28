@@ -1,5 +1,4 @@
 const { 
-    checkStr,
     booksOut,
     booksIn,
 } = require("./helpers");
@@ -10,12 +9,12 @@ const {
 // and they are renamed as authorId and bookId to avoid errors
 // or semantic confusion
 function findAuthorById(authors, testId) {
-    return authors.find(({ id: authorId }) => checkStr(authorId, testId));
+    return authors.find(({ id: authorId }) => authorId === testId);
 }
 
 
 function findBookById(books, testId) {
-    return books.find(({ id: bookId }) => checkStr(bookId, testId));
+    return books.find(({ id: bookId }) => bookId === testId);
 }
 
 

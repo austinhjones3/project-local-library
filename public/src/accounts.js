@@ -1,5 +1,4 @@
 const { 
-    checkStr,
     booksOut,
     booksOutForAccount,
 } = require("./helpers");
@@ -32,7 +31,7 @@ function numberOfBorrows({ id: userId }, books) {
         const borrowIdsArr = borrowArr.map(element => element.id);
         // for each borrowId, check if it is equal to user id, acc++ if so
         borrowIdsArr.forEach(element => {
-            if (checkStr(userId, element)) acc++;
+            if (userId === element) acc++;
         });
     return acc;
     }, 0);

@@ -24,7 +24,7 @@ function booksBorrowedCount(books) {
 
 
 function getMostCommonGenres(books) {
-    const genreObj = _getGenreObj(books);
+    const genreObj = _getGenreCountObj(books);
     return _sortSlice(_getArrFromObj(genreObj), 5);
 }   
 
@@ -48,12 +48,12 @@ function getMostPopularBooks(books) {
 
 
 function getMostPopularAuthors(books, authors) {
-    const authorListObj = _getAuthorObj(books, authors);
+    const authorListObj = _getAuthorCountObj(books, authors);
     return _sortSlice(_getArrFromObj(authorListObj), 5);
 }
 
 
-const _getGenreObj = (books) =>{
+const _getGenreCountObj = (books) =>{
     const obj = {};
     books.forEach(book => {
         obj[book.genre] 
@@ -63,7 +63,7 @@ const _getGenreObj = (books) =>{
     return obj;
 }
 
-const _getAuthorObj = (books, authors) => {
+const _getAuthorCountObj = (books, authors) => {
     const obj = {}
     books.forEach(book => {
         const authorOfBook = findAuthorById(authors, book.authorId);

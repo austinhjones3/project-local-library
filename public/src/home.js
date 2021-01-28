@@ -7,7 +7,7 @@ const {
     findAuthorById,
 } = require("./books.js");
 
-// for any and all unknown methods please see helpers.js
+
 function totalBooksCount(books) {
     return books.length;
 }
@@ -24,14 +24,8 @@ function booksBorrowedCount(books) {
 
 
 function getMostCommonGenres(books) {
-    const result = [];
     const genreObj = _getGenreObj(books);
-    for (let i = 0; i < Object.keys(genreObj).length; i++) {
-        const tempGenre = Object.keys(genreObj)[i];
-        const tempCount = Object.values(genreObj)[i];
-        result[i] = { name: tempGenre, count: tempCount };
-    }
-    return _sortSlice(result, 5);
+    return _sortSlice(_getArrFromObj(genreObj), 5);
 }   
 
 
@@ -54,16 +48,8 @@ function getMostPopularBooks(books) {
 
 
 function getMostPopularAuthors(books, authors) {
-    const result = [];
     const authorListObj = _getAuthorObj(books, authors);
-    
-    for (let i = 0; i < Object.keys(authorListObj).length; i++) {
-        const tempAuthor = Object.keys(authorListObj)[i];
-        const tempCount = Object.values(authorListObj)[i];
-        result[i] = { name: tempAuthor, count: tempCount };
-    }
-    // sort the array by popularity, cut it to top 5, return
-    return _sortSlice(result, 5);
+    return _sortSlice(_getArrFromObj(authorListObj), 5);
 }
 
 
@@ -91,9 +77,17 @@ const _getAuthorObj = (books, authors) => {
 }
 
 const _sortSlice = (arr, length) => {
-    return arr.sort((entryA, entryB) => {
-        return entryA.count < entryB.count ? 1 : -1;
-    }).slice(0, length);
+    return arr.sort((a, b) => a.count < b.count ? 1 : -1).slice(0, length);
+}
+
+const _getArrFromObj = obj => {
+    const result = [];
+    for (let i = 0; i < Object.keys(obj).length; i++) {
+        const name = Object.keys(obj)[i];
+        const count = Object.values(obj)[i];
+        result[i] = { name, count };
+    }
+    return result;
 }
 
 module.exports = {

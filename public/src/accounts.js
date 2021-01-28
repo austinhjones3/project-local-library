@@ -36,19 +36,18 @@ function numberOfBorrows({ id: userId }, books) {
     return acc;
     }, 0);
 }
-    
+  
 
 function getBooksPossessedByAccount(account, books, authors) {
-    const result = [];
-    // get all books that are checked out
-    const booksOutArr = booksOut(books);
-  
-    booksOutForAccount(booksOutArr, account).forEach(element => {
-        // get authorObj
-        const authorObj = findAuthorById(authors, element.authorId);
-        result.push({ ...element, author: authorObj });
+  return books
+    .filter((book) => {
+      const latestBorrow = book.borrows[0];
+      return !latestBorrow.returned && latestBorrow.id === account.id;
+    })
+    .map((book) => {
+      const author = findAuthorById(authors, book.authorId);
+      return { ...book, author };
     });
-    return result;
 }
 
 

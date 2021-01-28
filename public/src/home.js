@@ -1,8 +1,5 @@
 const { 
-    getAuthorIds,
     booksOut,
-    sortSlice,
-    getGenreObj,
 } = require("./helpers.js");
 
 
@@ -28,13 +25,13 @@ function booksBorrowedCount(books) {
 
 function getMostCommonGenres(books) {
     const result = [];
-    const genreObj = getGenreObj(books);
+    const genreObj = _getGenreObj(books);
     for (let i = 0; i < Object.keys(genreObj).length; i++) {
-        const tempKey = Object.keys(genreObj)[i];
-        const tempVal = Object.values(genreObj)[i];
-        result[i] = { name: tempKey, count: tempVal };
+        const tempGenre = Object.keys(genreObj)[i];
+        const tempCount = Object.values(genreObj)[i];
+        result[i] = { name: tempGenre, count: tempCount };
     }
-    return sortSlice(result, 5);
+    return _sortSlice(result, 5);
 }   
 
 
@@ -52,37 +49,52 @@ function getMostPopularBooks(books) {
     });
 
     // sort the array by popularity, cut it to top 5, return
-    return sortSlice(result, 5);
+    return _sortSlice(result, 5);
 }
 
 
 function getMostPopularAuthors(books, authors) {
     const result = [];
-    // get array of author id's
-    const authorIdArr = getAuthorIds(authors);
-    // for each author id
-    authorIdArr.forEach(id => {
-        // find their books and return them
-        const booksByAuthor = books.filter(element => id === element.authorId);
-        // for each book
-        booksByAuthor.forEach(book => {
-            // retrieves the author obj that matches the current author id
-            // find the object for the author by using author id
-            const authorObj = findAuthorById(authors, id);
-            // push { key-name: authorName, key-count: numOfBorrows }
-            result.push({ 
-                name: `${authorObj.name.first} ${authorObj.name.last}`,
-                count: book.borrows.length,
-            });
-            return result;
-        });
-        return result;
-    });
-
+    const authorListObj = _getAuthorObj(books, authors);
+    
+    for (let i = 0; i < Object.keys(authorListObj).length; i++) {
+        const tempAuthor = Object.keys(authorListObj)[i];
+        const tempCount = Object.values(authorListObj)[i];
+        result[i] = { name: tempAuthor, count: tempCount };
+    }
     // sort the array by popularity, cut it to top 5, return
-    return sortSlice(result, 5);
+    return _sortSlice(result, 5);
 }
 
+
+const _getGenreObj = (books) =>{
+    const obj = {};
+    books.forEach(book => {
+        obj[book.genre] 
+        ?   obj[book.genre]++
+        :   obj[book.genre] = 1;
+    });
+    return obj;
+}
+
+const _getAuthorObj = (books, authors) => {
+    const obj = {}
+    books.forEach(book => {
+        const authorOfBook = findAuthorById(authors, book.authorId);
+        const authorName = `${authorOfBook.name.first} ${authorOfBook.name.last}`;
+
+        obj[authorName]
+        ?   obj[authorName] += book.borrows.length
+        :   obj[authorName] = book.borrows.length;
+    });
+    return obj;
+}
+
+const _sortSlice = (arr, length) => {
+    return arr.sort((entryA, entryB) => {
+        return entryA.count < entryB.count ? 1 : -1;
+    }).slice(0, length);
+}
 
 module.exports = {
   totalBooksCount,

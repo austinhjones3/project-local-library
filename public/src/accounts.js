@@ -33,7 +33,6 @@ function numberOfBorrows({ id: userId }, books) {
         // for each borrowId, check if it is equal to user id, acc++ if so
         borrowIdsArr.forEach(element => {
             if (checkStr(userId, element)) acc++;
-            return acc;
         });
     return acc;
     }, 0);
@@ -48,19 +47,7 @@ function getBooksPossessedByAccount(account, books, authors) {
     booksOutForAccount(booksOutArr, account).forEach(element => {
         // get authorObj
         const authorObj = findAuthorById(authors, element.authorId);
-        // because of the order the req specs want the information in,
-        // push the keys in that order. can't use spread
-        result.push({ 
-            id: element.id,
-            title: element.title,
-            genre: element.genre,
-            authorId: element.authorId,
-            author: authorObj,
-            borrows: element.borrows,
-         });
-        return result;
-        // at this point we have everything we need we just need to figure
-        // out how to return the correct output
+        result.push({ ...element, author: authorObj });
     });
     return result;
 }

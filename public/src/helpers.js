@@ -23,64 +23,15 @@ const booksIn = books => {
 }
 
 
-const makeSetFromArray = array => {
-    const set = new Set();
-    for (let element of array) {
-        set.add(element);
-    }
-    return set;
-}
-
-
-const getUniqueGenres = array => {
-    // next make a set of unique genres
-    const genresSet = makeSetFromArray(array);
-    // convert unique genres into an array
-    const uniqueGenres = Array.from(genresSet);
-    return uniqueGenres;
-}
-
-
-const getAuthorIds = authors => {
-    return authors.map(author => author.id);
-}
-
-
-const findBookById = (books, id) => {
-    return books.find(element => element.id === id);
-}
-
-
 const booksOutForAccount = (booksOutArr, account) => {
     return booksOutArr.filter(element => element.borrows[0].id === account.id);
 }
 
-const sortSlice = (arr, length) => {
-    return arr.sort((entryA, entryB) => {
-        return entryA.count < entryB.count ? 1 : -1;
-    }).slice(0, length);
-}
-
-const getGenreObj = (books) =>{
-    const genreObj = {};
-    books.forEach(book => {
-        genreObj[book.genre] 
-        ?   genreObj[book.genre]++
-        :   genreObj[book.genre] = 1;
-    });
-    return genreObj;
-}
 
 
 module.exports = {
     checkStr,
     booksOut,
     booksIn,
-    makeSetFromArray,
-    getUniqueGenres,
-    getAuthorIds,
-    findBookById,
     booksOutForAccount,
-    sortSlice,
-    getGenreObj,
 }

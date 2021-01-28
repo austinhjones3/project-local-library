@@ -55,6 +55,22 @@ const booksOutForAccount = (booksOutArr, account) => {
     return booksOutArr.filter(element => element.borrows[0].id === account.id);
 }
 
+const sortSlice = (arr, length) => {
+    return arr.sort((entryA, entryB) => {
+        return entryA.count < entryB.count ? 1 : -1;
+    }).slice(0, length);
+}
+
+const getGenreObj = (books) =>{
+    const genreObj = {};
+    books.forEach(book => {
+        genreObj[book.genre] 
+        ?   genreObj[book.genre]++
+        :   genreObj[book.genre] = 1;
+    });
+    return genreObj;
+}
+
 
 module.exports = {
     checkStr,
@@ -65,4 +81,6 @@ module.exports = {
     getAuthorIds,
     findBookById,
     booksOutForAccount,
+    sortSlice,
+    getGenreObj,
 }

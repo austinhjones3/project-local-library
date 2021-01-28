@@ -1,8 +1,8 @@
 const { 
-    checkStr,
-    getUniqueGenres,
     getAuthorIds,
     booksOut,
+    sortSlice,
+    getGenreObj,
 } = require("./helpers.js");
 
 
@@ -27,28 +27,14 @@ function booksBorrowedCount(books) {
 
 
 function getMostCommonGenres(books) {
-
     const result = [];
-    // make array out of all genre entries to use to compare to count uniques
-    const genresArr = books.map(book => book.genre);
-    // get array of unique genres and use for each
-    getUniqueGenres(genresArr).forEach(uniqueGenre => {
-        let count = 0;
-        // if the uniqueGenre === the current genre in the long genre array,
-        // ++ the count of that genre
-        genresArr.forEach(testGenre => {
-            if (checkStr(uniqueGenre, testGenre)) count++;
-            return count;
-        });
-        
-        result.push({ name: uniqueGenre, count });
-        return result;
-    });
-
-    // sort the result from greatest to least and return only the first 5
-    return result.sort((entryA, entryB) => {
-        return entryA.count < entryB.count ? 1 : -1;
-    }).slice(0, 5);
+    const genreObj = getGenreObj(books);
+    for (let i = 0; i < Object.keys(genreObj).length; i++) {
+        const tempKey = Object.keys(genreObj)[i];
+        const tempVal = Object.values(genreObj)[i];
+        result[i] = { name: tempKey, count: tempVal };
+    }
+    return sortSlice(result, 5);
 }   
 
 
@@ -66,9 +52,7 @@ function getMostPopularBooks(books) {
     });
 
     // sort the array by popularity, cut it to top 5, return
-    return result.sort((entryA, entryB) => {
-        return entryA.count < entryB.count ? 1 : -1;
-    }).slice(0, 5);
+    return sortSlice(result, 5);
 }
 
 
@@ -96,9 +80,7 @@ function getMostPopularAuthors(books, authors) {
     });
 
     // sort the array by popularity, cut it to top 5, return
-    return result.sort((entryA, entryB) => {
-        return entryA.count < entryB.count ? 1 : -1;
-    }).slice(0, 5);
+    return sortSlice(result, 5);
 }
 
 

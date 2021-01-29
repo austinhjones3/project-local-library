@@ -1,9 +1,6 @@
 const { findAuthorById } = require("./books");
 
-// for any and all unknown methods please see helpers.js
 function findAccountById(accounts, testId) {
-  // find the account that matches the 'id'
-  // use find method
   return accounts.find((account) => account.id === testId);
 }
 
@@ -13,17 +10,11 @@ function sortAccountsByLastName(accounts) {
   });
 }
 
-// destructured account.id, renamed userId
-function numberOfBorrows({ id: userId }, books) {
-  // destructured "element".borrows renamed borrowArray
-  return books.reduce((acc, { borrows: borrowArr }) => {
-    // get just the ids from the borrows
-    const borrowIdsArr = borrowArr.map((element) => element.id);
-    // for each borrowId, check if it is equal to user id, acc++ if so
-    borrowIdsArr.forEach((element) => {
-      if (userId === element) acc++;
-    });
-    return acc;
+function numberOfBorrows({ id: accountId }, books) {
+  return books.reduce((total, book) => {
+    const borrowIdArr = book.borrows.map((element) => element.id);
+    if (borrowIdArr.includes(accountId)) total++;
+    return total;
   }, 0);
 }
 

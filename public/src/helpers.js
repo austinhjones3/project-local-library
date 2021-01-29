@@ -1,5 +1,3 @@
-// booksOut and booksIn tests the first element of the books' borrows array
-// they return an array of the elements that match
 const booksOut = (books) => {
   return books.filter((book) => book.borrows[0].returned === false);
 };

@@ -50,7 +50,7 @@ function partitionBooksByBorrowedStatus(books) {
  * contains the ID of the borrower and a 'returned' boolean key.
  * @param {Object[]} accounts - an array of account objects. Each object contains
  * keys of information for the account.
- * @returns an array of borrower objects containing the keys from the borrow object
+ * @returns {Object[]} - an array of borrower objects containing the keys from the borrow object
  * and the keys of the associated account object.
  *
  * @example getBorrowsForBook(books[3], accounts);

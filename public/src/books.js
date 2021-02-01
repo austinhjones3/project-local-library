@@ -1,17 +1,60 @@
 const { booksOut, booksIn } = require("./helpers");
 
-function findAuthorById(authors, testId) {
-  return authors.find(({ id: authorId }) => authorId === testId);
+/**
+ * Return the author object whose ID matches the idToMatch
+ *
+ * @param {Object[]} authors - each object contains info for author
+ * @param {Number} idToMatch - an author's ID
+ * @returns {Object} 'author' - an author object matching the ID
+ *
+ * @example findAuthorById(authors, 4);
+ */
+function findAuthorById(authors, idToMatch) {
+  return authors.find(({ id: authorId }) => authorId === idToMatch);
 }
 
-function findBookById(books, testId) {
-  return books.find(({ id: bookId }) => bookId === testId);
+/**
+ * Return the book object whose ID matches the idToMatch
+ *
+ * @param {Object[]} books - each object contains info for book
+ * @param {Number} idToMatch - a book's ID
+ * @returns {Object} - a book object matching the ID
+ *
+ * @example findBookById(books, "5f447132d487bd81da01e25e");
+ */
+function findBookById(books, idToMatch) {
+  return books.find(({ id: bookId }) => bookId === idToMatch);
 }
 
+/**
+ * Return an array of two arrays. The first element is an array of all book objects that
+ * are currently checked out. The second element is an array of all book objects that
+ * are currently in the library.
+ *
+ * @param {Object[]} books - each object contains info for books
+ * @returns {Array[Object]} - an array with two arrays as elements, that contain
+ * book objects
+ *
+ * @example partitionBooksByBorrowedStatus(books);
+ */
 function partitionBooksByBorrowedStatus(books) {
   return [booksOut(books), booksIn(books)];
 }
 
+/**
+ * Returns an array of all borrowers of a given book, as well as the
+ * borrower's information
+ *
+ * @param {Object} book - book obj
+ * @param {Object[]} book.borrows - an array of 'borrows' objects. Each borrow
+ * contains the ID of the borrower and a 'returned' boolean key.
+ * @param {Object[]} accounts - an array of account objects. Each object contains
+ * keys of information for the account.
+ * @returns an array of borrower objects containing the keys from the borrow object
+ * and the keys of the associated account object.
+ *
+ * @example getBorrowsForBook(bookObj, accounts);
+ */
 function getBorrowersForBook({ borrows }, accounts) {
   const result = [];
   borrows.forEach((element) => {

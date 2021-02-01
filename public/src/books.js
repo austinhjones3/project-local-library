@@ -30,7 +30,7 @@ function findBookById(books, idToMatch) {
  * Return an array of two arrays. The first element is an array of all book objects that
  * are currently checked out. The second element is an array of all book objects that
  * are currently in the library.
- *
+ * @function booksOut @function booksIn are helpers from ./helpers.js
  * @param {Object[]} books - each object contains info for books
  * @returns {Array[Object]} - an array with two arrays as elements, that contain
  * book objects

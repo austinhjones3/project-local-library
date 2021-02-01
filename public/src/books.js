@@ -5,7 +5,7 @@ const { booksOut, booksIn } = require("./helpers");
  *
  * @param {Object[]} authors - each object contains info for author
  * @param {Number} idToMatch - an author's ID
- * @returns {Object} 'author' - an author object matching the ID
+ * @returns {Object} - an author object matching the ID
  *
  * @example findAuthorById(authors, 4);
  */
@@ -53,7 +53,7 @@ function partitionBooksByBorrowedStatus(books) {
  * @returns an array of borrower objects containing the keys from the borrow object
  * and the keys of the associated account object.
  *
- * @example getBorrowsForBook(bookObj, accounts);
+ * @example getBorrowsForBook(books[3], accounts);
  */
 function getBorrowersForBook({ borrows }, accounts) {
   const result = [];

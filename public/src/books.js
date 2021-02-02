@@ -1,5 +1,3 @@
-const { booksOut, booksIn } = require("./helpers");
-
 /**
  * Return the author object whose ID matches the idToMatch
  *
@@ -30,7 +28,7 @@ function findBookById(books, idToMatch) {
  * Return an array of two arrays. The first element is an array of all book objects that
  * are currently checked out. The second element is an array of all book objects that
  * are currently in the library.
- * @function booksOut @function booksIn are helpers from ./helpers.js
+ * @function _booksOut @function _booksIn are helpers from ./helpers.js
  * @param {Object[]} books - each object contains info for books
  * @returns {Array[Object]} - an array with two arrays as elements, that contain
  * book objects
@@ -38,7 +36,7 @@ function findBookById(books, idToMatch) {
  * @example partitionBooksByBorrowedStatus(books);
  */
 function partitionBooksByBorrowedStatus(books) {
-  return [booksOut(books), booksIn(books)];
+  return [_booksOut(books), _booksIn(books)];
 }
 
 /**
@@ -67,9 +65,28 @@ function getBorrowersForBook({ borrows }, accounts) {
   return result.slice(0, 10);
 }
 
+/*>>>>>>>>>>>>>>>>>>>> HELPERS <<<<<<<<<<<<<<<<<<<<*/
+
+/**
+ * @param {Object[]} books - an array of book objects
+ * @returns {Object[]} - an array of book objects that are currently checked out
+ */
+const _booksOut = (books) => {
+  return books.filter((book) => book.borrows[0].returned === false);
+};
+
+/**
+ * @param {Object[]} books - an array of book objects
+ * @returns {Object[]} - an array of book objects that are currently in the library
+ */
+const _booksIn = (books) => {
+  return books.filter((book) => book.borrows[0].returned === true);
+};
+
 module.exports = {
   findAuthorById,
   findBookById,
   partitionBooksByBorrowedStatus,
   getBorrowersForBook,
+  _booksOut,
 };

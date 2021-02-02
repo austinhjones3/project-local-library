@@ -1,5 +1,3 @@
-const { findAuthorById } = require("./books");
-
 /**
  * @param {Object[]} accounts - an array of account objects
  * @param {Number} idToMatch - an account's ID
@@ -61,12 +59,26 @@ function getBooksPossessedByAccount(account, books, authors) {
       })
       // map out data for those books: book keys and associated author object
       .map((book) => {
-        const author = findAuthorById(authors, book.authorId);
+        const author = _findAuthorById(authors, book.authorId);
         return { ...book, author };
       })
   );
 }
 
+/*>>>>>>>>>>>>>>>>>>>> HELPERS <<<<<<<<<<<<<<<<<<<<*/
+
+/**
+ * Return the author object whose ID matches the idToMatch
+ *
+ * @param {Object[]} authors - each object contains info for author
+ * @param {Number} idToMatch - an author's ID
+ * @returns {Object} - an author object matching the ID
+ *
+ * @example findAuthorById(authors, 4);
+ */
+function _findAuthorById(authors, idToMatch) {
+  return authors.find(({ id: authorId }) => authorId === idToMatch);
+}
 module.exports = {
   findAccountById,
   sortAccountsByLastName,

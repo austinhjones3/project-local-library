@@ -1,7 +1,3 @@
-const { booksOut } = require("./helpers.js");
-
-const { findAuthorById } = require("./books.js");
-
 /**
  * @param {Object[]} books - an array of book objects
  * @returns {Number} - the length of the books array
@@ -24,7 +20,7 @@ function totalAccountsCount(accounts) {
  * @returns {Number} - the length of the array returned from booksOut(books)
  */
 function booksBorrowedCount(books) {
-  return booksOut(books).length;
+  return _booksOut(books).length;
 }
 
 /**
@@ -72,6 +68,8 @@ function getMostPopularAuthors(books, authors) {
   return _sortSlice(_getArrFromObj(authorListObj), 5);
 }
 
+/*>>>>>>>>>>>>>>>>>>>> HELPERS <<<<<<<<<<<<<<<<<<<<*/
+
 /**
  * @param {Object[]} books - array of book objects
  * @returns {Object} - an object of genres (keys) and the amount of times (values)
@@ -95,7 +93,7 @@ const _getGenreCountObj = (books) => {
 const _getAuthorCountObj = (books, authors) => {
   const obj = {};
   books.forEach((book) => {
-    const authorOfBook = findAuthorById(authors, book.authorId);
+    const authorOfBook = _findAuthorById(authors, book.authorId);
     const authorName = `${authorOfBook.name.first} ${authorOfBook.name.last}`;
 
     /* does key exist? Increment by book.borrows.length if so, create with
@@ -132,6 +130,26 @@ const _getArrFromObj = (obj) => {
   return result;
 };
 
+/**
+ * @param {Object[]} books - an array of book objects
+ * @returns {Object[]} - an array of book objects that are currently checked out
+ */
+const _booksOut = (books) => {
+  return books.filter((book) => book.borrows[0].returned === false);
+};
+
+/**
+ * Return the author object whose ID matches the idToMatch
+ *
+ * @param {Object[]} authors - each object contains info for author
+ * @param {Number} idToMatch - an author's ID
+ * @returns {Object} - an author object matching the ID
+ *
+ * @example findAuthorById(authors, 4);
+ */
+function _findAuthorById(authors, idToMatch) {
+  return authors.find(({ id: authorId }) => authorId === idToMatch);
+}
 module.exports = {
   totalBooksCount,
   totalAccountsCount,
